@@ -70,6 +70,7 @@ public:
             list.push_back(shape);
             shape->draw();
         }
+        delete factory;
     }
 
     const std::vector<Shape*>& getList() const
