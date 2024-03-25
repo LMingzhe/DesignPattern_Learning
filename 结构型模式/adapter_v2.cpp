@@ -18,42 +18,39 @@ public:
     virtual ~TypeC() {}
 };
 
-// 实现USB接口的充电功能
-class USBCharger : public USB
+// TypeC接口适配USB充电器
+class USBAdapter : public USB
 {
 public:
     void chargeWithUSB() override
     {
         std::cout << "USB Adapter" << std::endl;
     }
+
 };
 
-// 实现TypeC接口的充电功能
-class TypeCCharger : public TypeC
+// 电脑自带实现TypeC接口，拥有一个适配器
+class Computer : public TypeC
 {
 public:
+    Computer(USBAdapter* adapter) : adapter(adapter) {}
+
     void chargeWithTypeC() override
     {
         std::cout << "TypeC" << std::endl;
     }
-};
 
-// TypeC接口适配USB充电器
-class USBAdapter : public USB
-{
-public:
-    USBAdapter(USB* usbcharger) : usbCharger(usbcharger) {}
-
-    void chargeWithUSB() override
+    void chargeWithUSB()
     {
-        usbCharger->chargeWithUSB();
+        adapter->chargeWithUSB();
     }
 
-    ~USBAdapter() { delete usbCharger; }
+    ~Computer() { delete adapter; }
 
 private:
-    USB* usbCharger;
+    USBAdapter* adapter;
 };
+
 
 int main(int argc, char const *argv[])
 {
@@ -65,25 +62,23 @@ int main(int argc, char const *argv[])
         return 0;
     }
     int type;
+    Computer* computer = new Computer(new USBAdapter());
     while (cnt--)
     {
         std::cin >> type;
         if (type == 1) 
         {
-            TypeC* typeCcharger = new TypeCCharger();
-            typeCcharger->chargeWithTypeC();
-            delete typeCcharger;
+            computer->chargeWithTypeC();   
         } 
         else if (type == 2) 
         {
-            USB* typeCadapter = new USBAdapter(new USBCharger());
-            typeCadapter->chargeWithUSB();
-            delete typeCadapter;
+            computer->chargeWithUSB();
         } 
         else 
         {
             std::cout << "输入有误！" << std::endl;
         }
     }
+    delete computer;
     return 0;
 }
