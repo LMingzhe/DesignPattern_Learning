@@ -13,6 +13,7 @@ using std::map;
 using std::list;
 using std::vector;
 
+// 抽象用户
 class User
 {
 public:
@@ -23,6 +24,7 @@ public:
     virtual ~User() {}
 };
 
+// 抽象中介者
 class Mediator
 {
 public:
@@ -32,6 +34,7 @@ public:
     virtual ~Mediator() {}
 };
 
+// 具体中介者
 class CharRoomMediator : public Mediator
 {
 private:
@@ -60,6 +63,7 @@ public:
     }
 };
 
+// 具体用户
 class CharUser : public User
 {
 private:
