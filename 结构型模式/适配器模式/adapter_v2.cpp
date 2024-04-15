@@ -45,7 +45,7 @@ public:
         adapter->chargeWithUSB();
     }
 
-    ~Computer() { delete adapter; }
+    ~Computer() override { delete adapter; }
 
 private:
     USBAdapter* adapter;
