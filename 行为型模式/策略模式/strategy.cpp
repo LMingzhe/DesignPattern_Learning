@@ -37,13 +37,13 @@ public:
 };
 
 // 上下文类
-class Context
+class Light
 {
 private:
     Strategy* discount;
 
 public:
-    Context(Strategy* discount) : discount(discount) {}
+    Light(Strategy* discount) : discount(discount) {}
 
     void contextInterface(int price)
     {
@@ -51,7 +51,7 @@ public:
         cout << priceDiscounted << endl;
     }
 
-    ~Context() { delete discount; }
+    ~Light() { delete discount; }
 };
 
 int main(int argc, char const *argv[])
@@ -69,13 +69,13 @@ int main(int argc, char const *argv[])
         cin >> price >> discountType;
         if (discountType == 1)
         {
-            Context* context = new Context(new Discount_A);
+            Light* context = new Light(new Discount_A);
             context->contextInterface(price);
             delete context;
         }
         else 
         {
-            Context* context = new Context(new Discount_B);
+            Light* context = new Light(new Discount_B);
             context->contextInterface(price);
             delete context;
         }
